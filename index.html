@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thaiwow</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        background: #0a0a0b;
+        color: #f2f2f0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        min-height: 100vh;
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 40px;
+        border-bottom: 1px solid #1c1c1e;
+    }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a {
+        color: #ccc; text-decoration: none; font-size: 0.9rem;
+    }
+    .nav-links a:hover { color: #fff; }
+    .cta-btn {
+        background: #fff; color: #000; border: none;
+        padding: 10px 20px; border-radius: 20px; font-weight: 600;
+        cursor: pointer; font-size: 0.85rem;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 100px 20px 60px;
+    }
+    .hero h1 {
+        font-size: 5rem;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+    .hero .subtitle {
+        color: #999;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+    }
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    .btn {
+        padding: 14px 30px;
+        border-radius: 30px;
+        border: 1px solid #333;
+        background: rgba(255,255,255,0.05);
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: 1px;
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+    .btn:hover { background: rgba(255,255,255,0.1); }
+
+    .section {
+        padding: 80px 40px;
+        text-align: center;
+    }
+    .section h2 { font-size: 2.5rem; margin-bottom: 10px; }
+    .section p.desc { color: #999; margin-bottom: 50px; }
+
+    .cards {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+    .card {
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 12px;
+        padding: 30px;
+        width: 220px;
+    }
+    .folder-icon {
+        width: 80px;
+        height: 60px;
+        background: #eee;
+        border-radius: 4px;
+        margin: 0 auto 20px;
+        position: relative;
+    }
+    .folder-icon::before {
+        content: '';
+        position: absolute;
+        top: -10px; left: 0;
+        width: 40px; height: 10px;
+        background: #eee;
+        border-radius: 4px 4px 0 0;
+    }
+    .card h3 { font-size: 1.1rem; margin-bottom: 5px; letter-spacing: 1px; }
+    .card p { color: #888; font-size: 0.85rem; }
+
+    #dragon {
+        background: #111;
+        border-top: 1px solid #222;
+    }
+    #dragon h2 { color: #ff2626; }
+    #dragon p.desc { max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    footer {
+        text-align: center;
+        padding: 30px;
+        color: #555;
+        font-size: 0.8rem;
+        border-top: 1px solid #1c1c1e;
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Thaiwow</div>
+    <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#dragon">Dragon</a></li>
+    </ul>
+    <button class="cta-btn">Start a project</button>
+</nav>
+
+<section class="hero" id="work">
+    <h1>THAIWOW</h1>
+    <p class="subtitle">Game UI Designer</p>
+    <div class="hero-buttons">
+        <button class="btn">View Services</button>
+        <a href="#dragon"><button class="btn">Go to Dragon</button></a>
+    </div>
+</section>
+
+<section class="section" id="services">
+    <h2>What I Do</h2>
+    <p class="desc">All my work, thoughtfully refined and cleanly presented.</p>
+    <div class="cards">
+        <div class="card">
+            <div class="folder-icon"></div>
+            <h3>ANIME</h3>
+            <p>Anime style UIs.</p>
+        </div>
+        <div class="card">
+            <div class="folder-icon"></div>
+            <h3>STUD</h3>
+            <p>Stud/Brainrot style UIs.</p>
+        </div>
+        <div class="card">
+            <div class="folder-icon"></div>
+            <h3>CARTOONISH</h3>
+            <p>Cartoonish style UIs.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="dragon">
+    <h2>Dragon</h2>
+    <p class="desc">This is the #dragon section — this is what you land on when the URL has /#dragon at the end.</p>
+</section>
+
+<footer>
+    &copy; 2026 Thaiwow. Rough draft — placeholder content.
+</footer>
+
+</body>
+</html>
