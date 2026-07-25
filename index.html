@@ -11,46 +11,129 @@
         color: #f2f2f0;
         font-family: 'Segoe UI', Arial, sans-serif;
         min-height: 100vh;
+        overflow-x: hidden;
     }
 
+    /* ---------- NAV ---------- */
     nav {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 20px 40px;
         border-bottom: 1px solid #1c1c1e;
+        position: relative;
+        z-index: 20;
     }
-    .logo { font-weight: 700; font-size: 1.2rem; }
-    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.1rem; }
+    .logo-mark {
+        width: 20px; height: 20px;
+        background: linear-gradient(135deg, #fff, #999);
+        clip-path: polygon(0 0, 100% 30%, 60% 100%);
+    }
+    .nav-links { display: flex; gap: 6px; list-style: none; }
     .nav-links a {
-        color: #ccc; text-decoration: none; font-size: 0.9rem;
+        color: #ccc; text-decoration: none; font-size: 0.85rem;
+        padding: 8px 16px; border-radius: 20px; transition: 0.2s;
     }
     .nav-links a:hover { color: #fff; }
+    .nav-links a.active { background: #fff; color: #000; font-weight: 600; }
     .cta-btn {
         background: #fff; color: #000; border: none;
         padding: 10px 20px; border-radius: 20px; font-weight: 600;
-        cursor: pointer; font-size: 0.85rem;
+        cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;
     }
 
+    /* ---------- HERO ---------- */
     .hero {
+        position: relative;
         text-align: center;
-        padding: 100px 20px 60px;
+        padding: 90px 20px 50px;
+        overflow: hidden;
     }
-    .hero h1 {
-        font-size: 5rem;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-    }
-    .hero .subtitle {
-        color: #999;
-        margin-bottom: 30px;
-        font-size: 1.1rem;
-    }
-    .hero-buttons {
+
+    .hero-decor {
+        position: absolute;
+        inset: 0;
         display: flex;
-        justify-content: center;
-        gap: 15px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 1;
+        pointer-events: none;
     }
+    .decor-tile {
+        width: 130px; height: 170px;
+        background: linear-gradient(160deg, #2a2a2c, #111);
+        border: 1px solid #222;
+        border-radius: 8px;
+        opacity: 0.35;
+        filter: blur(0.3px) grayscale(0.6);
+    }
+    .decor-tile:nth-child(2), .decor-tile:nth-child(4) { transform: translateY(40px) rotate(-2deg); opacity: 0.25; }
+    .decor-tile:nth-child(3), .decor-tile:nth-child(5) { transform: translateY(-20px) rotate(2deg); opacity: 0.3; }
+
+    .blossom {
+        position: absolute;
+        width: 6px; height: 6px;
+        background: #eee;
+        border-radius: 50%;
+        opacity: 0.5;
+        box-shadow:
+            20px 30px 0 -1px #ddd, 40px 10px 0 -2px #ccc, 60px 50px 0 -1px #eee,
+            10px 70px 0 -2px #ddd, 80px 90px 0 -1px #ccc, 30px 110px 0 -2px #eee,
+            5px 150px 0 -1px #ddd, 55px 170px 0 -2px #ccc;
+    }
+    .blossom-left { top: 20px; left: 20px; }
+    .blossom-right { top: 20px; right: 20px; transform: scaleX(-1); }
+
+    .hero-content { position: relative; z-index: 5; }
+
+    .word-mark {
+        font-size: 5.5rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #fff;
+        text-shadow: 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(255,255,255,0.25);
+        margin-bottom: 6px;
+        position: relative;
+        display: inline-block;
+    }
+    .word-mark .spark {
+        position: absolute;
+        font-size: 1.2rem;
+        opacity: 0.7;
+    }
+    .spark-1 { top: -10px; left: -30px; }
+    .spark-2 { top: -20px; right: 10px; }
+    .spark-3 { bottom: -10px; left: 10px; }
+    .spark-4 { bottom: -20px; right: -25px; }
+
+    .scroll-indicator {
+        width: 26px; height: 42px;
+        border: 2px solid #555;
+        border-radius: 14px;
+        margin: 24px auto 20px;
+        position: relative;
+    }
+    .scroll-indicator::before {
+        content: '';
+        position: absolute;
+        top: 6px; left: 50%;
+        width: 6px; height: 6px;
+        background: #fff;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        animation: scroll-dot 1.6s infinite ease-in-out;
+    }
+    @keyframes scroll-dot {
+        0% { top: 6px; opacity: 1; }
+        60% { top: 22px; opacity: 0.3; }
+        100% { top: 6px; opacity: 1; }
+    }
+
+    .subtitle { color: #999; margin-bottom: 26px; font-size: 1.05rem; }
+
+    .hero-buttons { display: flex; justify-content: center; gap: 15px; }
     .btn {
         padding: 14px 30px;
         border-radius: 30px;
@@ -64,29 +147,36 @@
     }
     .btn:hover { background: rgba(255,255,255,0.1); }
 
-    .section {
-        padding: 80px 40px;
-        text-align: center;
+    /* hidden anchor target: keeps #dragon in the URL working without showing a section */
+    #dragon {
+        display: block;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
     }
-    .section h2 { font-size: 2.5rem; margin-bottom: 10px; }
+
+    /* ---------- WHAT I DO ---------- */
+    .section {
+        padding: 70px 40px 90px;
+        text-align: center;
+        position: relative;
+        z-index: 5;
+    }
+    .section h2 { font-size: 2.4rem; margin-bottom: 10px; font-weight: 700; }
     .section p.desc { color: #999; margin-bottom: 50px; }
 
-    .cards {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        flex-wrap: wrap;
-    }
+    .cards { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
     .card {
         background: #111;
         border: 1px solid #222;
         border-radius: 12px;
         padding: 30px;
         width: 220px;
+        transition: 0.2s;
     }
+    .card:hover { border-color: #333; background: #141414; }
     .folder-icon {
-        width: 80px;
-        height: 60px;
+        width: 80px; height: 60px;
         background: #eee;
         border-radius: 4px;
         margin: 0 auto 20px;
@@ -100,15 +190,8 @@
         background: #eee;
         border-radius: 4px 4px 0 0;
     }
-    .card h3 { font-size: 1.1rem; margin-bottom: 5px; letter-spacing: 1px; }
+    .card h3 { font-size: 1.05rem; margin-bottom: 5px; letter-spacing: 1px; }
     .card p { color: #888; font-size: 0.85rem; }
-
-    #dragon {
-        background: #111;
-        border-top: 1px solid #222;
-    }
-    #dragon h2 { color: #ff2626; }
-    #dragon p.desc { max-width: 500px; margin-left: auto; margin-right: auto; }
 
     footer {
         text-align: center;
@@ -117,28 +200,61 @@
         font-size: 0.8rem;
         border-top: 1px solid #1c1c1e;
     }
+
+    @media (max-width: 700px) {
+        .nav-links { display: none; }
+        .word-mark { font-size: 3rem; }
+        .hero-decor { display: none; }
+    }
 </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">Thaiwow</div>
+    <div class="logo">
+        <div class="logo-mark"></div>
+        Thaiwow
+    </div>
     <ul class="nav-links">
-        <li><a href="#work">Work</a></li>
+        <li><a href="#work" class="active">Work</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="#dragon">Dragon</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#community">Community</a></li>
     </ul>
-    <button class="cta-btn">Start a project</button>
+    <button class="cta-btn">Start a project ↗</button>
 </nav>
 
 <section class="hero" id="work">
-    <h1>THAIWOW</h1>
-    <p class="subtitle">Game UI Designer</p>
-    <div class="hero-buttons">
-        <button class="btn">View Services</button>
-        <a href="#dragon"><button class="btn">Go to Dragon</button></a>
+    <div class="hero-decor">
+        <div class="decor-tile"></div>
+        <div class="decor-tile"></div>
+        <div class="decor-tile"></div>
+        <div class="decor-tile"></div>
+        <div class="decor-tile"></div>
+    </div>
+    <div class="blossom blossom-left"></div>
+    <div class="blossom blossom-right"></div>
+
+    <div class="hero-content">
+        <div class="word-mark">
+            THAIWOW
+            <span class="spark spark-1">✦</span>
+            <span class="spark spark-2">↗</span>
+            <span class="spark spark-3">✧</span>
+            <span class="spark spark-4">⚡</span>
+        </div>
+        <div class="scroll-indicator"></div>
+        <p class="subtitle">Game UI Designer</p>
+        <div class="hero-buttons">
+            <button class="btn">View Services</button>
+            <button class="btn">Book a Slot</button>
+        </div>
     </div>
 </section>
+
+<!-- Hidden anchor: keeps thaiwow.github.io/#dragon working without a visible section -->
+<div id="dragon"></div>
 
 <section class="section" id="services">
     <h2>What I Do</h2>
@@ -160,11 +276,6 @@
             <p>Cartoonish style UIs.</p>
         </div>
     </div>
-</section>
-
-<section class="section" id="dragon">
-    <h2>Dragon</h2>
-    <p class="desc">This is the #dragon section — this is what you land on when the URL has /#dragon at the end.</p>
 </section>
 
 <footer>
