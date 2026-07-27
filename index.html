@@ -3,284 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thaiwow</title>
+<title>Thaiwow // Case File</title>
 <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-        background: #0a0a0b;
-        color: #f2f2f0;
-        font-family: 'Segoe UI', Arial, sans-serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-    }
+    :root { --bg:#050505; --panel:#0a0a0a; --line:#282828; --muted:#777; --white:#f3f3f0; --red:#ff2633; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; background:var(--bg); }
+    body { background:var(--bg); color:var(--white); font-family:"Courier New", monospace; min-height:100vh; overflow-x:hidden; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.14; z-index:50; background:repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.06) 4px); }
 
-    /* ---------- NAV ---------- */
-    nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px 40px;
-        border-bottom: 1px solid #1c1c1e;
-        position: relative;
-        z-index: 20;
-    }
-    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.1rem; }
-    .logo-mark {
-        width: 20px; height: 20px;
-        background: linear-gradient(135deg, #fff, #999);
-        clip-path: polygon(0 0, 100% 30%, 60% 100%);
-    }
-    .nav-links { display: flex; gap: 6px; list-style: none; }
-    .nav-links a {
-        color: #ccc; text-decoration: none; font-size: 0.85rem;
-        padding: 8px 16px; border-radius: 20px; transition: 0.2s;
-    }
-    .nav-links a:hover { color: #fff; }
-    .nav-links a.active { background: #fff; color: #000; font-weight: 600; }
-    .cta-btn {
-        background: #fff; color: #000; border: none;
-        padding: 10px 20px; border-radius: 20px; font-weight: 600;
-        cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;
-    }
+    nav { height:54px; position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:25px; padding:0 clamp(20px,5vw,70px); border-bottom:1px solid var(--line); background:rgba(5,5,5,.94); backdrop-filter:blur(12px); }
+    .logo { font-family:Impact,"Arial Narrow",sans-serif; font-size:1.05rem; letter-spacing:.05em; white-space:nowrap; }
+    .logo small { color:var(--red); font:700 .53rem "Courier New",monospace; letter-spacing:.12em; }
+    .logo-mark { display:inline-block; width:7px; height:7px; background:var(--red); border-radius:50%; margin-right:6px; box-shadow:0 0 9px var(--red); }
+    .nav-links { display:flex; align-items:center; gap:18px; list-style:none; flex:1; }
+    .nav-links a { color:#858585; text-decoration:none; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; transition:.18s; }
+    .nav-links a::before { content:"// "; color:var(--red); opacity:0; }
+    .nav-links a:hover, .nav-links a.active { color:var(--white); }
+    .nav-links a.active::before { opacity:1; }
+    .cta-btn { border:1px solid #333; background:transparent; color:#bbb; padding:7px 11px; text-transform:uppercase; font:700 .58rem "Courier New",monospace; letter-spacing:.1em; cursor:pointer; }
+    .cta-btn:hover { color:var(--white); border-color:var(--red); }
 
-    /* ---------- HERO ---------- */
-    .hero {
-        position: relative;
-        text-align: center;
-        padding: 90px 20px 50px;
-        overflow: hidden;
-    }
+    .interests-menu { position:absolute; top:calc(100% + 8px); left:clamp(170px,31vw,420px); width:270px; padding:8px; background:#0c0c0c; border:1px solid #353535; border-top:2px solid var(--red); box-shadow:0 16px 40px rgba(0,0,0,.62); opacity:0; visibility:hidden; transform:translateY(-7px); transition:.18s; }
+    .interests-menu.open { opacity:1; visibility:visible; transform:translateY(0); }
+    .interests-menu p { color:#777; font-size:.58rem; letter-spacing:.15em; padding:7px 9px; }
+    .interest-menu-item { display:block; padding:10px; color:var(--white); text-decoration:none; border-top:1px solid #232323; font:700 .68rem "Courier New",monospace; transition:.16s; }
+    .interest-menu-item:hover { background:#181818; color:var(--red); padding-left:14px; }
+    .interest-menu-item span { display:block; color:#666; font-size:.56rem; margin-top:4px; font-weight:400; }
 
-    .hero-decor {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        z-index: 1;
-        pointer-events: none;
-    }
-    .decor-tile {
-        width: 130px; height: 170px;
-        background: linear-gradient(160deg, #2a2a2c, #111);
-        border: 1px solid #222;
-        border-radius: 8px;
-        opacity: 0.35;
-        filter: blur(0.3px) grayscale(0.6);
-    }
-    .decor-tile:nth-child(2), .decor-tile:nth-child(4) { transform: translateY(40px) rotate(-2deg); opacity: 0.25; }
-    .decor-tile:nth-child(3), .decor-tile:nth-child(5) { transform: translateY(-20px) rotate(2deg); opacity: 0.3; }
+    .hero { min-height:455px; max-width:1180px; margin:0 auto; padding:54px clamp(25px,5vw,70px); display:grid; grid-template-columns:minmax(220px,300px) 1fr; gap:40px; border-bottom:1px solid var(--line); position:relative; }
+    .case-card { border:1px solid #333; position:relative; min-height:324px; padding:11px; background:linear-gradient(135deg,#141414,#060606 48%,#171717); overflow:hidden; }
+    .case-card::before { content:"CLASSIFIED // 07"; position:absolute; top:14px; left:14px; color:var(--red); font-size:.56rem; letter-spacing:.17em; z-index:2; }
+    .case-card::after { content:"THAIWOW"; position:absolute; left:14px; bottom:15px; font:3.8rem Impact,sans-serif; letter-spacing:.03em; color:rgba(255,255,255,.07); transform:rotate(-90deg); transform-origin:left bottom; }
+    .portrait { position:absolute; inset:40px 11px 11px; background:repeating-linear-gradient(0deg,rgba(255,255,255,.14) 0 1px,transparent 1px 4px), radial-gradient(ellipse at 50% 38%,#dadada 0 14%,#555 14.5% 29%,#101010 29.5% 58%,#050505 59%); filter:grayscale(1) contrast(1.45); }
+    .portrait::before { content:""; position:absolute; width:64%; height:32%; top:19%; left:18%; border-radius:48% 48% 38% 38%; background:radial-gradient(ellipse at 32% 50%,#111 0 9%,transparent 10%),radial-gradient(ellipse at 68% 50%,#111 0 9%,transparent 10%),linear-gradient(155deg,transparent 42%,#111 43% 52%,transparent 53%); opacity:.8; }
+    .portrait::after { content:"NO MERCY DIVISION"; position:absolute; bottom:10px; right:10px; color:#efefef; font-size:.55rem; letter-spacing:.15em; }
+    .hero-copy { align-self:center; position:relative; }
+    .eyebrow { color:#8e8e8e; font-size:.62rem; letter-spacing:.18em; margin-bottom:19px; }
+    .eyebrow .signal { display:inline-block; width:7px; height:7px; background:var(--red); border-radius:50%; margin-right:8px; box-shadow:0 0 8px var(--red); }
+    .word-mark { font:clamp(4rem,9vw,7.4rem)/.8 Impact,"Arial Narrow",sans-serif; letter-spacing:.02em; text-transform:uppercase; }
+    .case-title { color:var(--red); font-size:.78rem; font-weight:700; letter-spacing:.2em; margin-top:20px; }
+    .subtitle { color:#9d9d9d; line-height:1.7; font-size:.76rem; max-width:530px; margin:22px 0; }
+    .status-grid { display:flex; gap:clamp(20px,5vw,58px); margin:26px 0 30px; }
+    .status-grid div { color:#686868; font-size:.56rem; letter-spacing:.13em; }
+    .status-grid strong { display:block; margin-top:8px; color:var(--red); font-size:1.05rem; letter-spacing:0; }
+    .hero-buttons { display:flex; flex-wrap:wrap; gap:9px; }
+    .btn { background:var(--white); color:#050505; border:1px solid var(--white); border-radius:0; padding:14px 18px; font:700 .61rem "Courier New",monospace; letter-spacing:.11em; text-transform:uppercase; cursor:pointer; transition:.18s; }
+    .btn.secondary { color:#ddd; background:transparent; border-color:#3b3b3b; }
+    .btn:hover { background:var(--red); border-color:var(--red); color:#fff; }
+    .file-ref { position:absolute; bottom:5px; right:0; color:#444; font-size:.55rem; letter-spacing:.12em; }
 
-    .blossom {
-        position: absolute;
-        width: 6px; height: 6px;
-        background: #eee;
-        border-radius: 50%;
-        opacity: 0.5;
-        box-shadow:
-            20px 30px 0 -1px #ddd, 40px 10px 0 -2px #ccc, 60px 50px 0 -1px #eee,
-            10px 70px 0 -2px #ddd, 80px 90px 0 -1px #ccc, 30px 110px 0 -2px #eee,
-            5px 150px 0 -1px #ddd, 55px 170px 0 -2px #ccc;
-    }
-    .blossom-left { top: 20px; left: 20px; }
-    .blossom-right { top: 20px; right: 20px; transform: scaleX(-1); }
+    .section { max-width:1180px; margin:0 auto; padding:70px clamp(25px,5vw,70px); border-bottom:1px solid var(--line); scroll-margin-top:54px; }
+    .section-label { color:var(--red); font-size:.57rem; letter-spacing:.15em; margin-bottom:9px; }
+    .section h2 { font:2.55rem/.95 Impact,"Arial Narrow",sans-serif; letter-spacing:.03em; text-transform:uppercase; }
+    .desc { color:#898989; max-width:640px; font-size:.72rem; line-height:1.7; margin:14px 0 34px; }
+    .about-copy { max-width:700px; color:#b8b8b8; line-height:1.8; font-size:.78rem; border-left:2px solid var(--red); padding-left:18px; }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { position:relative; min-height:198px; padding:17px; border:1px solid #303030; background:#0b0b0b; cursor:pointer; transition:.2s; }
+    .card::after { content:"OPEN FILE +"; position:absolute; bottom:14px; color:#777; font-size:.56rem; letter-spacing:.12em; }
+    .card:hover { border-color:var(--red); transform:translateY(-3px); background:#111; }
+    .folder-icon { width:55px; height:40px; background:#e8e8e4; margin-bottom:28px; position:relative; clip-path:polygon(0 10%,38% 10%,44% 0,100% 0,100% 100%,0 100%); }
+    .card h3 { font-size:.79rem; letter-spacing:.1em; }
+    .card p { margin-top:7px; color:#777; font-size:.65rem; line-height:1.5; }
+    .contact-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    footer { max-width:1180px; margin:auto; padding:23px clamp(25px,5vw,70px); color:#555; font-size:.58rem; letter-spacing:.1em; }
 
-    .hero-content { position: relative; z-index: 5; }
+    .interest-detail-backdrop { position:fixed; inset:0; z-index:80; display:grid; place-items:center; padding:20px; background:rgba(0,0,0,.7); backdrop-filter:blur(6px); opacity:0; visibility:hidden; transition:.18s; }
+    .interest-detail-backdrop.open { opacity:1; visibility:visible; }
+    .interest-detail { width:min(440px,100%); padding:25px; border:1px solid #3a3a3a; border-top:3px solid var(--red); background:#0d0d0d; box-shadow:0 30px 80px #000; transform:translateY(12px); transition:.18s; }
+    .interest-detail-backdrop.open .interest-detail { transform:translateY(0); }
+    .interest-detail-close { float:right; width:28px; height:28px; border:1px solid #3c3c3c; background:#151515; color:#fff; font-size:1rem; cursor:pointer; }
+    .interest-detail-label { color:#777; font-size:.6rem; letter-spacing:.16em; }
+    .interest-detail h3 { margin:13px 0 9px; font:1.7rem Impact,sans-serif; text-transform:uppercase; }
+    .interest-detail p { color:#aaa; font-size:.72rem; line-height:1.7; }
 
-    .word-mark {
-        font-size: 5.5rem;
-        font-weight: 800;
-        letter-spacing: 1px;
-        color: #fff;
-        text-shadow: 0 0 40px rgba(255,255,255,0.5), 0 0 80px rgba(255,255,255,0.25);
-        margin-bottom: 6px;
-        position: relative;
-        display: inline-block;
-    }
-    .word-mark .spark {
-        position: absolute;
-        font-size: 1.2rem;
-        opacity: 0.7;
-    }
-    .spark-1 { top: -10px; left: -30px; }
-    .spark-2 { top: -20px; right: 10px; }
-    .spark-3 { bottom: -10px; left: 10px; }
-    .spark-4 { bottom: -20px; right: -25px; }
-
-    .scroll-indicator {
-        width: 26px; height: 42px;
-        border: 2px solid #555;
-        border-radius: 14px;
-        margin: 24px auto 20px;
-        position: relative;
-    }
-    .scroll-indicator::before {
-        content: '';
-        position: absolute;
-        top: 6px; left: 50%;
-        width: 6px; height: 6px;
-        background: #fff;
-        border-radius: 50%;
-        transform: translateX(-50%);
-        animation: scroll-dot 1.6s infinite ease-in-out;
-    }
-    @keyframes scroll-dot {
-        0% { top: 6px; opacity: 1; }
-        60% { top: 22px; opacity: 0.3; }
-        100% { top: 6px; opacity: 1; }
-    }
-
-    .subtitle { color: #999; margin-bottom: 26px; font-size: 1.05rem; }
-
-    .hero-buttons { display: flex; justify-content: center; gap: 15px; }
-    .btn {
-        padding: 14px 30px;
-        border-radius: 30px;
-        border: 1px solid #333;
-        background: rgba(255,255,255,0.05);
-        color: #fff;
-        font-weight: 600;
-        letter-spacing: 1px;
-        cursor: pointer;
-        font-size: 0.85rem;
-    }
-    .btn:hover { background: rgba(255,255,255,0.1); }
-
-    /* hidden anchor target: keeps #dragon in the URL working without showing a section */
-    #dragon {
-        display: block;
-        height: 1px;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    /* ---------- WHAT I DO ---------- */
-    .section {
-        padding: 70px 40px 90px;
-        text-align: center;
-        position: relative;
-        z-index: 5;
-    }
-    .section h2 { font-size: 2.4rem; margin-bottom: 10px; font-weight: 700; }
-    .section p.desc { color: #999; margin-bottom: 50px; }
-
-    .cards { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-    .card {
-        background: #111;
-        border: 1px solid #222;
-        border-radius: 12px;
-        padding: 30px;
-        width: 220px;
-        transition: 0.2s;
-    }
-    .card:hover { border-color: #333; background: #141414; }
-    .folder-icon {
-        width: 80px; height: 60px;
-        background: #eee;
-        border-radius: 4px;
-        margin: 0 auto 20px;
-        position: relative;
-    }
-    .folder-icon::before {
-        content: '';
-        position: absolute;
-        top: -10px; left: 0;
-        width: 40px; height: 10px;
-        background: #eee;
-        border-radius: 4px 4px 0 0;
-    }
-    .card h3 { font-size: 1.05rem; margin-bottom: 5px; letter-spacing: 1px; }
-    .card p { color: #888; font-size: 0.85rem; }
-
-    footer {
-        text-align: center;
-        padding: 30px;
-        color: #555;
-        font-size: 0.8rem;
-        border-top: 1px solid #1c1c1e;
-    }
-
-    @media (max-width: 700px) {
-        .nav-links { display: none; }
-        .word-mark { font-size: 3rem; }
-        .hero-decor { display: none; }
-    }
+    .custom-cursor,.cursor-ring,.cursor-dot { position:fixed; top:0; left:0; pointer-events:none; z-index:100; opacity:0; transform:translate3d(-100px,-100px,0); will-change:transform,opacity; }
+    .cursor-ring { width:30px; height:30px; margin:-15px 0 0 -15px; border:1px solid rgba(255,255,255,.8); border-radius:50%; transition:width .16s,height .16s,margin .16s,border-color .16s; }
+    .cursor-dot { width:6px; height:6px; margin:-3px 0 0 -3px; background:var(--red); border-radius:50%; box-shadow:0 0 8px var(--red); }
+    .custom-cursor { width:13px; height:18px; margin:-2px 0 0 -2px; background:#fff; clip-path:polygon(0 0,0 100%,27% 72%,44% 100%,57% 94%,40% 66%,76% 66%); filter:drop-shadow(0 1px 2px #000); }
+    html.cursor-ready,html.cursor-ready * { cursor:none!important; }
+    html.cursor-ready .custom-cursor,html.cursor-ready .cursor-ring,html.cursor-ready .cursor-dot { opacity:1; }
+    html.cursor-hover .cursor-ring { width:42px; height:42px; margin:-21px 0 0 -21px; border-color:var(--red); }
+    @media (pointer:coarse) { .custom-cursor,.cursor-ring,.cursor-dot { display:none; } }
+    @media (max-width:720px) { nav { gap:14px; padding:0 16px; } .nav-links { gap:10px; overflow:hidden; } .nav-links a { font-size:.5rem; } .cta-btn{display:none;} .hero { grid-template-columns:1fr; padding-top:35px; gap:25px; } .case-card { min-height:180px; } .portrait { inset:35px 11px 11px; } .word-mark { font-size:4.2rem; } .cards { grid-template-columns:1fr; } .interests-menu { left:90px; } }
 </style>
 </head>
 <body>
-
 <nav>
-    <div class="logo">
-        <div class="logo-mark"></div>
-        Thaiwow
-    </div>
+    <div class="logo"><span class="logo-mark"></span>THAIWOW <small>CASE_07</small></div>
     <ul class="nav-links">
-        <li><a href="#work" class="active">Work</a></li>
-        <li><a href="#services">Services</a></li>
+        <li><a href="#work" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#community">Community</a></li>
+        <li><a href="#interests" class="interests-trigger" aria-expanded="false">Interests</a></li>
+        <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="cta-btn">Start a project ↗</button>
+    <button class="cta-btn" data-scroll-target="contact">Open Comms</button>
+    <div class="interests-menu" aria-hidden="true"><p>SELECT FOLDER //</p><a class="interest-menu-item" href="#interests" data-interest="1">01 / INTEREST ONE<span>Open classified file</span></a><a class="interest-menu-item" href="#interests" data-interest="2">02 / INTEREST TWO<span>Open classified file</span></a><a class="interest-menu-item" href="#interests" data-interest="3">03 / INTEREST THREE<span>Open classified file</span></a></div>
 </nav>
 
+<main>
 <section class="hero" id="work">
-    <div class="hero-decor">
-        <div class="decor-tile"></div>
-        <div class="decor-tile"></div>
-        <div class="decor-tile"></div>
-        <div class="decor-tile"></div>
-        <div class="decor-tile"></div>
-    </div>
-    <div class="blossom blossom-left"></div>
-    <div class="blossom blossom-right"></div>
-
-    <div class="hero-content">
-        <div class="word-mark">
-            THAIWOW
-            <span class="spark spark-1">✦</span>
-            <span class="spark spark-2">↗</span>
-            <span class="spark spark-3">✧</span>
-            <span class="spark spark-4">⚡</span>
-        </div>
-        <div class="scroll-indicator"></div>
-        <p class="subtitle">Game UI Designer</p>
-        <div class="hero-buttons">
-            <button class="btn">View Services</button>
-            <button class="btn">Book a Slot</button>
-        </div>
+    <div class="case-card"><div class="portrait"></div></div>
+    <div class="hero-copy">
+        <p class="eyebrow"><span class="signal"></span>SYSTEM ONLINE // DIVISION 07 // CLEARANCE: <b style="color:var(--red)">OPERATOR</b></p>
+        <h1 class="word-mark">THAIWOW</h1>
+        <p class="case-title">CASE FILE // NO MERCY DIVISION</p>
+        <p class="subtitle">Welcome to my little corner of the internet. This is the public record: current projects, interests, and an open channel for anyone who wants to reach out.</p>
+        <div class="status-grid"><div>PROJECTS<strong>07</strong></div><div>STATUS<strong>ACTIVE</strong></div><div>VERDICT<strong>LOCKED IN</strong></div></div>
+        <div class="hero-buttons"><button class="btn" data-scroll-target="about">View Dossier</button><button class="btn secondary" data-scroll-target="contact">Open Channel</button></div>
+        <span class="file-ref">FILE_@thaiwow // 2026</span>
     </div>
 </section>
 
-<!-- Hidden anchor: keeps thaiwow.github.io/#dragon working without a visible section -->
-<div id="dragon"></div>
+<section class="section" id="about"><p class="section-label">01 // PERSONNEL DOSSIER</p><h2>About</h2><p class="desc">A quick introduction from the operator behind the file.</p><p class="about-copy">Hey, I am Thaiwow. Use this space to talk about who you are, what you are building, and the things that keep you curious. Keep it direct, personal, and entirely yours.</p></section>
 
-<section class="section" id="services">
-    <h2>What I Do</h2>
-    <p class="desc">All my work, thoughtfully refined and cleanly presented.</p>
-    <div class="cards">
-        <div class="card">
-            <div class="folder-icon"></div>
-            <h3>ANIME</h3>
-            <p>Anime style UIs.</p>
-        </div>
-        <div class="card">
-            <div class="folder-icon"></div>
-            <h3>STUD</h3>
-            <p>Stud/Brainrot style UIs.</p>
-        </div>
-        <div class="card">
-            <div class="folder-icon"></div>
-            <h3>CARTOONISH</h3>
-            <p>Cartoonish style UIs.</p>
-        </div>
-    </div>
-</section>
+<section class="section" id="interests"><p class="section-label">02 // FOLDER ARCHIVE</p><h2>Interests</h2><p class="desc">Click a numbered folder to access its file.</p><div class="cards"><div class="card" data-interest="1" role="button" tabindex="0"><div class="folder-icon"></div><h3>01 / INTEREST ONE</h3><p>First item in the archive.</p></div><div class="card" data-interest="2" role="button" tabindex="0"><div class="folder-icon"></div><h3>02 / INTEREST TWO</h3><p>Second item in the archive.</p></div><div class="card" data-interest="3" role="button" tabindex="0"><div class="folder-icon"></div><h3>03 / INTEREST THREE</h3><p>Third item in the archive.</p></div></div></section>
 
-<footer>
-    &copy; 2026 Thaiwow. Rough draft — placeholder content.
-</footer>
+<section class="section" id="contact"><p class="section-label">03 // OPEN CHANNEL</p><h2>Contact</h2><p class="desc">Want to reach out? Pick a channel and send a signal.</p><div class="contact-actions"><button class="btn">Email</button><button class="btn secondary">Discord</button></div></section>
+</main>
+<footer>THAIWOW // CASE FILE 07 // ALL SYSTEMS NOMINAL</footer>
 
+<div class="interest-detail-backdrop" aria-hidden="true"><div class="interest-detail" role="dialog" aria-modal="true"><button class="interest-detail-close" aria-label="Close">x</button><div class="interest-detail-label">FOLDER <span class="interest-number">01</span> // CLASSIFIED</div><h3 id="interest-detail-title">Interest One</h3><p class="interest-detail-text">Make this your first passion. Add a short note about why it matters to you.</p></div></div>
+<div class="custom-cursor" aria-hidden="true"></div><div class="cursor-ring" aria-hidden="true"></div><div class="cursor-dot" aria-hidden="true"></div>
+
+<script>
+const navLinks=[...document.querySelectorAll('.nav-links a')], sections=[...document.querySelectorAll('#work,#about,#interests,#contact')];
+function setActive(id){navLinks.forEach(link=>link.classList.toggle('active',link.getAttribute('href')===`#${id}`));}
+document.querySelectorAll('[data-scroll-target]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.scrollTarget).scrollIntoView({behavior:'smooth'})));
+const observer=new IntersectionObserver(entries=>{const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(visible)setActive(visible.target.id);},{rootMargin:'-30% 0px -55% 0px',threshold:[.05,.25,.5]}); sections.forEach(s=>observer.observe(s));
+const trigger=document.querySelector('.interests-trigger'), menu=document.querySelector('.interests-menu'), backdrop=document.querySelector('.interest-detail-backdrop'), title=document.querySelector('#interest-detail-title'), text=document.querySelector('.interest-detail-text'), number=document.querySelector('.interest-number');
+const details={1:['01','Interest One','Make this your first passion. Add a short note about why it matters to you, current projects around it, or a link you want visitors to find.'],2:['02','Interest Two','This is the second file in your archive. Replace this with your own story, collection, hobby, or ongoing project.'],3:['03','Interest Three','The third folder is ready for whatever you are most into right now. Keep it short, distinctive, and completely yours.']};
+function closeMenu(){menu.classList.remove('open');trigger.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true');} function openInterest(id){const d=details[id];if(!d)return;number.textContent=d[0];title.textContent=d[1];text.textContent=d[2];backdrop.classList.add('open');backdrop.setAttribute('aria-hidden','false');closeMenu();} function closeInterest(){backdrop.classList.remove('open');backdrop.setAttribute('aria-hidden','true');}
+trigger.addEventListener('click',e=>{e.preventDefault();const open=menu.classList.toggle('open');trigger.setAttribute('aria-expanded',open);menu.setAttribute('aria-hidden',!open);}); document.querySelectorAll('[data-interest]').forEach(item=>{item.addEventListener('click',e=>{e.preventDefault();openInterest(item.dataset.interest);});item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openInterest(item.dataset.interest);}});}); document.querySelector('.interest-detail-close').addEventListener('click',closeInterest);backdrop.addEventListener('click',e=>{if(e.target===backdrop)closeInterest();});document.addEventListener('click',e=>{if(!e.target.closest('.interests-menu,.interests-trigger'))closeMenu();});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInterest();});
+const cursor=document.querySelector('.custom-cursor'),ring=document.querySelector('.cursor-ring'),dot=document.querySelector('.cursor-dot');if(matchMedia('(pointer:fine)').matches){let mx=-100,my=-100,rx=-100,ry=-100,dx=-100,dy=-100;document.documentElement.classList.add('cursor-ready');addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;});document.addEventListener('pointerover',e=>document.documentElement.classList.toggle('cursor-hover',Boolean(e.target.closest('a,button,.card'))));function animate(){dx+=(mx-dx)*.46;dy+=(my-dy)*.46;rx+=(mx-rx)*.14;ry+=(my-ry)*.14;cursor.style.transform=`translate3d(${mx}px,${my}px,0)`;dot.style.transform=`translate3d(${dx}px,${dy}px,0)`;ring.style.transform=`translate3d(${rx}px,${ry}px,0)`;requestAnimationFrame(animate);}animate();}
+</script>
 </body>
 </html>
